@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/plexusone/ax-spec/schemas/x-ax-extensions.schema.json",
+  "title": "AX Spec OpenAPI Extensions",
+  "description": "JSON Schema for x-ax-* OpenAPI extensions that enable Agent Experience compliance",
+  "definitions": {
+    "x-ax-required-fields": {
+      "type": "array",
+      "description": "Explicit list of fields required for deterministic operation execution",
+      "items": {
+        "type": "string"
+      },
+      "examples": [
+        ["amount", "currency", "recipient_id"]
+      ]
+    },
+    "x-ax-capabilities": {
+      "type": "array",
+      "description": "Semantic capabilities this operation provides for agent discovery",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "examples": [
+        ["create_payment", "process_refund"],
+        ["list_users", "search_users"],
+        ["generate_report", "export_data"]
+      ]
+    },
+    "x-ax-error-code": {
+      "type": "string",
+      "description": "Machine-readable error code for agent error classification",
+      "pattern": "^[A-Z][A-Z0-9_]*$",
+      "examples": [
+        "INVALID_DATE_RANGE",
+        "INSUFFICIENT_FUNDS",
+        "RESOURCE_NOT_FOUND",
+        "RATE_LIMIT_EXCEEDED"
+      ]
+    },
+    "x-ax-error-suggestion": {
+      "type": "string",
+      "description": "Actionable suggestion for agent error recovery",
+      "examples": [
+        "Ensure start_date is before end_date",
+        "Reduce batch size to under 100 items",
+        "Wait 60 seconds before retrying"
+      ]
+    },
+    "x-ax-retryable": {
+      "type": "boolean",
+      "description": "Whether the operation can be safely retried on failure",
+      "default": false
+    },
+    "x-ax-idempotent": {
+      "type": "boolean",
+      "description": "Whether repeated calls with same parameters produce same result",
+      "default": false
+    },
+    "x-ax-sandboxable": {
+      "type": "boolean",
+      "description": "Whether the operation can be safely called in a test/sandbox environment",
+      "default": true
+    },
+    "x-ax-cost-estimate": {
+      "type": "object",
+      "description": "Estimated cost or resource consumption for the operation",
+      "properties": {
+        "tokens": {
+          "type": "integer",
+          "description": "Estimated token usage for LLM operations"
+        },
+        "credits": {
+          "type": "number",
+          "description": "Estimated credit consumption"
+        },
+        "rate_limit_weight": {
+          "type": "integer",
+          "description": "How much this counts against rate limits (1 = standard)",
+          "default": 1
+        }
+      }
+    },
+    "x-ax-logging-level": {
+      "type": "string",
+      "description": "Recommended logging verbosity for debugging",
+      "enum": ["debug", "info", "warn", "error"],
+      "default": "info"
+    },
+    "x-ax-category": {
+      "type": "string",
+      "description": "Functional category for grouping operations",
+      "examples": [
+        "payments",
+        "users",
+        "analytics",
+        "admin"
+      ]
+    },
+    "x-ax-deprecated-suggestion": {
+      "type": "string",
+      "description": "Suggested replacement when operation is deprecated",
+      "examples": [
+        "Use /v2/payments instead",
+        "Migrate to createPaymentV2 operation"
+      ]
+    }
+  },
+  "type": "object",
+  "properties": {
+    "x-ax-required-fields": { "$ref": "#/definitions/x-ax-required-fields" },
+    "x-ax-capabilities": { "$ref": "#/definitions/x-ax-capabilities" },
+    "x-ax-error-code": { "$ref": "#/definitions/x-ax-error-code" },
+    "x-ax-error-suggestion": { "$ref": "#/definitions/x-ax-error-suggestion" },
+    "x-ax-retryable": { "$ref": "#/definitions/x-ax-retryable" },
+    "x-ax-idempotent": { "$ref": "#/definitions/x-ax-idempotent" },
+    "x-ax-sandboxable": { "$ref": "#/definitions/x-ax-sandboxable" },
+    "x-ax-cost-estimate": { "$ref": "#/definitions/x-ax-cost-estimate" },
+    "x-ax-logging-level": { "$ref": "#/definitions/x-ax-logging-level" },
+    "x-ax-category": { "$ref": "#/definitions/x-ax-category" },
+    "x-ax-deprecated-suggestion": { "$ref": "#/definitions/x-ax-deprecated-suggestion" }
+  }
+}
