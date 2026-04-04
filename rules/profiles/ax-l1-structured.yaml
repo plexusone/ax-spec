@@ -1,0 +1,29 @@
+# AX-L1: Structured
+# Basic structural requirements for agent consumption
+# Focus: Valid OpenAPI with explicit types and operation IDs
+
+extends:
+  - spectral:oas
+
+rules:
+  # Inherit only L1 rules from main ruleset
+  ax-deterministic-schema-type:
+    severity: error
+  ax-introspectable-operation-id:
+    severity: error
+  ax-introspectable-summary:
+    severity: error
+  ax-explicit-parameter-required:
+    severity: warn
+
+  # Disable higher-level rules
+  ax-deterministic-required-fields:
+    severity: off
+  ax-introspectable-capabilities:
+    severity: off
+  ax-recoverable-error-structure:
+    severity: off
+  ax-recoverable-retryable:
+    severity: off
+  ax-testable-sandboxable:
+    severity: off

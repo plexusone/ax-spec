@@ -1,0 +1,340 @@
+{
+  "extends": ["spectral:oas"],
+  "rules": {
+    "ax-deterministic-required-fields-post": {
+      "description": "POST operations must explicitly declare required fields via x-ax-required-fields for deterministic agent consumption.",
+      "message": "{{description}} - missing x-ax-required-fields on {{path}}",
+      "given": "$.paths.*.post",
+      "severity": "warn",
+      "then": {
+        "field": "x-ax-required-fields",
+        "function": "truthy"
+      }
+    },
+    "ax-deterministic-required-fields-put": {
+      "description": "PUT operations must explicitly declare required fields via x-ax-required-fields for deterministic agent consumption.",
+      "message": "{{description}} - missing x-ax-required-fields on {{path}}",
+      "given": "$.paths.*.put",
+      "severity": "warn",
+      "then": {
+        "field": "x-ax-required-fields",
+        "function": "truthy"
+      }
+    },
+    "ax-deterministic-required-fields-patch": {
+      "description": "PATCH operations must explicitly declare required fields via x-ax-required-fields for deterministic agent consumption.",
+      "message": "{{description}} - missing x-ax-required-fields on {{path}}",
+      "given": "$.paths.*.patch",
+      "severity": "warn",
+      "then": {
+        "field": "x-ax-required-fields",
+        "function": "truthy"
+      }
+    },
+    "ax-deterministic-schema-type": {
+      "description": "All schema properties must have explicit types. Agents cannot infer types from context.",
+      "message": "Schema property at {{path}} must have an explicit 'type' field",
+      "given": "$.components.schemas.*.properties.*",
+      "severity": "error",
+      "then": {
+        "field": "type",
+        "function": "truthy"
+      }
+    },
+    "ax-deterministic-no-additional-properties": {
+      "description": "Schemas should not allow arbitrary additional properties. Use additionalProperties: false for strict typing.",
+      "message": "Schema at {{path}} should set additionalProperties: false for deterministic responses",
+      "given": "$.components.schemas[?(@.type=='object')]",
+      "severity": "warn",
+      "then": {
+        "field": "additionalProperties",
+        "function": "falsy"
+      }
+    },
+    "ax-introspectable-capabilities-post": {
+      "description": "POST operations should declare x-ax-capabilities for agent discovery of API intent.",
+      "message": "{{description}} - add x-ax-capabilities to {{path}} for agent discoverability",
+      "given": "$.paths.*.post",
+      "severity": "info",
+      "then": {
+        "field": "x-ax-capabilities",
+        "function": "truthy"
+      }
+    },
+    "ax-introspectable-capabilities-get": {
+      "description": "GET operations should declare x-ax-capabilities for agent discovery of API intent.",
+      "message": "{{description}} - add x-ax-capabilities to {{path}} for agent discoverability",
+      "given": "$.paths.*.get",
+      "severity": "info",
+      "then": {
+        "field": "x-ax-capabilities",
+        "function": "truthy"
+      }
+    },
+    "ax-introspectable-operation-id-post": {
+      "description": "All POST operations must have an operationId for programmatic reference.",
+      "message": "Operation at {{path}} must have operationId for agent introspection",
+      "given": "$.paths.*.post",
+      "severity": "error",
+      "then": {
+        "field": "operationId",
+        "function": "truthy"
+      }
+    },
+    "ax-introspectable-operation-id-get": {
+      "description": "All GET operations must have an operationId for programmatic reference.",
+      "message": "Operation at {{path}} must have operationId for agent introspection",
+      "given": "$.paths.*.get",
+      "severity": "error",
+      "then": {
+        "field": "operationId",
+        "function": "truthy"
+      }
+    },
+    "ax-introspectable-operation-id-put": {
+      "description": "All PUT operations must have an operationId for programmatic reference.",
+      "message": "Operation at {{path}} must have operationId for agent introspection",
+      "given": "$.paths.*.put",
+      "severity": "error",
+      "then": {
+        "field": "operationId",
+        "function": "truthy"
+      }
+    },
+    "ax-introspectable-operation-id-patch": {
+      "description": "All PATCH operations must have an operationId for programmatic reference.",
+      "message": "Operation at {{path}} must have operationId for agent introspection",
+      "given": "$.paths.*.patch",
+      "severity": "error",
+      "then": {
+        "field": "operationId",
+        "function": "truthy"
+      }
+    },
+    "ax-introspectable-operation-id-delete": {
+      "description": "All DELETE operations must have an operationId for programmatic reference.",
+      "message": "Operation at {{path}} must have operationId for agent introspection",
+      "given": "$.paths.*.delete",
+      "severity": "error",
+      "then": {
+        "field": "operationId",
+        "function": "truthy"
+      }
+    },
+    "ax-introspectable-summary-post": {
+      "description": "All POST operations must have a summary for agent understanding.",
+      "message": "Operation at {{path}} must have summary for agent comprehension",
+      "given": "$.paths.*.post",
+      "severity": "error",
+      "then": {
+        "field": "summary",
+        "function": "truthy"
+      }
+    },
+    "ax-introspectable-summary-get": {
+      "description": "All GET operations must have a summary for agent understanding.",
+      "message": "Operation at {{path}} must have summary for agent comprehension",
+      "given": "$.paths.*.get",
+      "severity": "error",
+      "then": {
+        "field": "summary",
+        "function": "truthy"
+      }
+    },
+    "ax-introspectable-summary-put": {
+      "description": "All PUT operations must have a summary for agent understanding.",
+      "message": "Operation at {{path}} must have summary for agent comprehension",
+      "given": "$.paths.*.put",
+      "severity": "error",
+      "then": {
+        "field": "summary",
+        "function": "truthy"
+      }
+    },
+    "ax-introspectable-summary-patch": {
+      "description": "All PATCH operations must have a summary for agent understanding.",
+      "message": "Operation at {{path}} must have summary for agent comprehension",
+      "given": "$.paths.*.patch",
+      "severity": "error",
+      "then": {
+        "field": "summary",
+        "function": "truthy"
+      }
+    },
+    "ax-introspectable-summary-delete": {
+      "description": "All DELETE operations must have a summary for agent understanding.",
+      "message": "Operation at {{path}} must have summary for agent comprehension",
+      "given": "$.paths.*.delete",
+      "severity": "error",
+      "then": {
+        "field": "summary",
+        "function": "truthy"
+      }
+    },
+    "ax-recoverable-retryable-post": {
+      "description": "POST operations should indicate retry semantics via x-ax-retryable for safe agent retry logic.",
+      "message": "{{description}} - consider adding x-ax-retryable to {{path}}",
+      "given": "$.paths.*.post",
+      "severity": "info",
+      "then": {
+        "field": "x-ax-retryable",
+        "function": "defined"
+      }
+    },
+    "ax-recoverable-retryable-put": {
+      "description": "PUT operations should indicate retry semantics via x-ax-retryable for safe agent retry logic.",
+      "message": "{{description}} - consider adding x-ax-retryable to {{path}}",
+      "given": "$.paths.*.put",
+      "severity": "info",
+      "then": {
+        "field": "x-ax-retryable",
+        "function": "defined"
+      }
+    },
+    "ax-recoverable-retryable-patch": {
+      "description": "PATCH operations should indicate retry semantics via x-ax-retryable for safe agent retry logic.",
+      "message": "{{description}} - consider adding x-ax-retryable to {{path}}",
+      "given": "$.paths.*.patch",
+      "severity": "info",
+      "then": {
+        "field": "x-ax-retryable",
+        "function": "defined"
+      }
+    },
+    "ax-recoverable-retryable-delete": {
+      "description": "DELETE operations should indicate retry semantics via x-ax-retryable for safe agent retry logic.",
+      "message": "{{description}} - consider adding x-ax-retryable to {{path}}",
+      "given": "$.paths.*.delete",
+      "severity": "info",
+      "then": {
+        "field": "x-ax-retryable",
+        "function": "defined"
+      }
+    },
+    "ax-recoverable-idempotent-put": {
+      "description": "PUT operations should indicate idempotency via x-ax-idempotent.",
+      "message": "{{description}} - add x-ax-idempotent to {{path}} for safe agent retry",
+      "given": "$.paths.*.put",
+      "severity": "info",
+      "then": {
+        "field": "x-ax-idempotent",
+        "function": "defined"
+      }
+    },
+    "ax-recoverable-idempotent-delete": {
+      "description": "DELETE operations should indicate idempotency via x-ax-idempotent.",
+      "message": "{{description}} - add x-ax-idempotent to {{path}} for safe agent retry",
+      "given": "$.paths.*.delete",
+      "severity": "info",
+      "then": {
+        "field": "x-ax-idempotent",
+        "function": "defined"
+      }
+    },
+    "ax-explicit-request-body-required-post": {
+      "description": "POST request bodies must explicitly set required: true or false.",
+      "message": "Request body at {{path}} must explicitly set 'required' field",
+      "given": "$.paths.*.post.requestBody",
+      "severity": "warn",
+      "then": {
+        "field": "required",
+        "function": "defined"
+      }
+    },
+    "ax-explicit-request-body-required-put": {
+      "description": "PUT request bodies must explicitly set required: true or false.",
+      "message": "Request body at {{path}} must explicitly set 'required' field",
+      "given": "$.paths.*.put.requestBody",
+      "severity": "warn",
+      "then": {
+        "field": "required",
+        "function": "defined"
+      }
+    },
+    "ax-explicit-request-body-required-patch": {
+      "description": "PATCH request bodies must explicitly set required: true or false.",
+      "message": "Request body at {{path}} must explicitly set 'required' field",
+      "given": "$.paths.*.patch.requestBody",
+      "severity": "warn",
+      "then": {
+        "field": "required",
+        "function": "defined"
+      }
+    },
+    "ax-explicit-parameter-required": {
+      "description": "All parameters must explicitly set required: true or false.",
+      "message": "Parameter at {{path}} must explicitly set 'required' field",
+      "given": "$.paths.*.*.parameters.*",
+      "severity": "warn",
+      "then": {
+        "field": "required",
+        "function": "defined"
+      }
+    },
+    "ax-testable-sandboxable-post": {
+      "description": "POST operations should indicate sandbox safety via x-ax-sandboxable for agent testing.",
+      "message": "{{description}} - add x-ax-sandboxable to {{path}} for safe agent testing",
+      "given": "$.paths.*.post",
+      "severity": "info",
+      "then": {
+        "field": "x-ax-sandboxable",
+        "function": "defined"
+      }
+    },
+    "ax-testable-sandboxable-put": {
+      "description": "PUT operations should indicate sandbox safety via x-ax-sandboxable for agent testing.",
+      "message": "{{description}} - add x-ax-sandboxable to {{path}} for safe agent testing",
+      "given": "$.paths.*.put",
+      "severity": "info",
+      "then": {
+        "field": "x-ax-sandboxable",
+        "function": "defined"
+      }
+    },
+    "ax-testable-sandboxable-patch": {
+      "description": "PATCH operations should indicate sandbox safety via x-ax-sandboxable for agent testing.",
+      "message": "{{description}} - add x-ax-sandboxable to {{path}} for safe agent testing",
+      "given": "$.paths.*.patch",
+      "severity": "info",
+      "then": {
+        "field": "x-ax-sandboxable",
+        "function": "defined"
+      }
+    },
+    "ax-testable-sandboxable-delete": {
+      "description": "DELETE operations should indicate sandbox safety via x-ax-sandboxable for agent testing.",
+      "message": "{{description}} - add x-ax-sandboxable to {{path}} for safe agent testing",
+      "given": "$.paths.*.delete",
+      "severity": "info",
+      "then": {
+        "field": "x-ax-sandboxable",
+        "function": "defined"
+      }
+    },
+    "ax-testable-example-values": {
+      "description": "Schema properties should have example values for agent test data generation.",
+      "message": "Property at {{path}} should have example value for agent testing",
+      "given": "$.components.schemas.*.properties.*",
+      "severity": "info",
+      "then": {
+        "field": "example",
+        "function": "truthy"
+      }
+    },
+    "ax-auth-service-account": {
+      "description": "API should support non-interactive authentication (API key, bearer token, service account).",
+      "message": "Security scheme at {{path}} should support agent-friendly authentication (apiKey or http bearer)",
+      "given": "$.components.securitySchemes.*",
+      "severity": "info",
+      "then": [
+        {
+          "field": "type",
+          "function": "pattern",
+          "functionOptions": {
+            "match": "^(apiKey|http|oauth2)$"
+          }
+        }
+      ]
+    }
+  }
+}

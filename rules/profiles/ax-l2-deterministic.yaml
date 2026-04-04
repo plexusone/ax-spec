@@ -1,0 +1,35 @@
+# AX-L2: Deterministic
+# Strict schema requirements for predictable agent behavior
+# Focus: No ambiguous types, explicit required fields, strict schemas
+
+extends:
+  - ../ax-openapi.json
+
+rules:
+  # L2 adds deterministic requirements
+  ax-deterministic-required-fields:
+    severity: warn
+  ax-deterministic-schema-type:
+    severity: error
+  ax-deterministic-no-additional-properties:
+    severity: warn
+  ax-explicit-request-body-required:
+    severity: warn
+  ax-explicit-parameter-required:
+    severity: error
+
+  # Keep L1 rules
+  ax-introspectable-operation-id:
+    severity: error
+  ax-introspectable-summary:
+    severity: error
+
+  # Disable higher-level rules
+  ax-introspectable-capabilities:
+    severity: off
+  ax-recoverable-error-structure:
+    severity: off
+  ax-recoverable-retryable:
+    severity: off
+  ax-testable-sandboxable:
+    severity: off

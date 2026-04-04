@@ -1,0 +1,41 @@
+# AX-L3: Agent-Ready
+# Full agent compatibility with error recovery and discovery
+# Focus: Structured errors, capability discovery, retry semantics
+
+extends:
+  - ../ax-openapi.json
+
+rules:
+  # L3 adds agent-specific metadata
+  ax-deterministic-required-fields:
+    severity: error
+  ax-deterministic-schema-type:
+    severity: error
+  ax-deterministic-no-additional-properties:
+    severity: warn
+  ax-introspectable-capabilities:
+    severity: warn
+  ax-introspectable-operation-id:
+    severity: error
+  ax-introspectable-summary:
+    severity: error
+  ax-recoverable-error-structure:
+    severity: warn
+  ax-recoverable-error-schema:
+    severity: error
+  ax-recoverable-retryable:
+    severity: warn
+  ax-recoverable-idempotent:
+    severity: warn
+  ax-explicit-request-body-required:
+    severity: error
+  ax-explicit-parameter-required:
+    severity: error
+  ax-consistent-response-content-type:
+    severity: warn
+
+  # Disable optional rules
+  ax-testable-sandboxable:
+    severity: info
+  ax-testable-example-values:
+    severity: info
