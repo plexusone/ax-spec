@@ -1,0 +1,58 @@
+ using ruleset '/Users/johnwang/go/src/github.com/grokify/ax-spec/rules/ax-openapi.json' (containing 87 rules)
+ vacuuming file '/Users/johnwang/go/src/github.com/plexusone/elevenlabs-go/openapi/openapi-v3.1.json' against 87 rules: https://quobix.com/vacuum/rulesets/recommended
+
+ERR Rule timed out, skipping
+  ├──  rule: ax-deterministic-schema-type
+  └──  timeout: 5s
+
+ERR Rule timed out, skipping
+  ├──  rule: ax-testable-example-values
+  └──  timeout: 5s
+
+ERR Rule timed out, skipping
+  ├──  rule: oas3-missing-example
+  └──  timeout: 5s
+
+ERR Rule timed out, skipping
+  ├──  timeout: 5s
+  └──  rule: component-description
+
+ERR Rule timed out, skipping
+  ├──  rule: camel-case-properties
+  └──  timeout: 5s
+
+ category              ✗ errors      ▲ warnings    ● info                                                  
+ ────────────────────  ────────────  ────────────  ────────────────────────────────────────────────────────
+ Operations            0             2             0                                                       
+ Tags                  0             251           0                                                       
+ Schemas               0             30            18                                                      
+ Validation            0             148           520                                                     
+ Descriptions          0             142           2,598                                                   
+ Examples              0             30            0                                                       
+ ────────────────────  ────────────  ────────────  ────────────────────────────────────────────────────────
+ total                 0             603           3,136                                                   
+
+ rule                                      violations    quality impact                                    
+ ────────────────────────────────────────  ────────────  ──────────────────────────────────────────────────
+ description-duplication                   2,598         ██████████████████████████████████████████████████
+ operation-tag-defined                     240           ████                                              
+ operation-description                     120           ██                                                
+ ax-testable-sandboxable-post              109           ██                                                
+ ax-introspectable-capabilities-post       109           ██                                                
+ ax-recoverable-retryable-post             109           ██                                                
+ ax-deterministic-required-fields-post     109           ██                                                
+ ax-introspectable-capabilities-get        86            █                                                 
+ oas3-valid-schema-example                 30                                                              
+ ax-recoverable-retryable-delete           24                                                              
+ ────────────────────────────────────────  ────────────  ──────────────────────────────────────────────────
+ total                                     3,739       
+ ... and 20 more rules
+
+ --> use the <dashboard> command to be able to navigate results interactively <--
+
+ | Quality Score: 25/100 [🥵]
+
+ | ▲ Passed, but with 603 warnings and 3,136 informs.
+
+ use --debug if you want to enable developer logging
+

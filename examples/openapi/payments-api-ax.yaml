@@ -1,0 +1,388 @@
+openapi: 3.1.0
+info:
+  title: Payments API (AX-Compliant Example)
+  version: 1.0.0
+  description: |
+    Example API demonstrating AX Spec compliance with x-ax-* extensions
+    for agent-friendly integration.
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /payments:
+    post:
+      operationId: createPayment
+      summary: Create a new payment
+      description: Initiates a payment transaction between accounts
+      x-ax-required-fields:
+        - amount
+        - currency
+        - recipient_id
+      x-ax-capabilities:
+        - create_payment
+        - transfer_funds
+      x-ax-retryable: false
+      x-ax-sandboxable: true
+      x-ax-category: payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePaymentRequest'
+      responses:
+        '201':
+          description: Payment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '400':
+          description: Invalid request
+          x-ax-error-code: INVALID_PAYMENT_REQUEST
+          x-ax-error-suggestion: Check amount is positive and currency is valid ISO 4217 code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Business rule violation
+          x-ax-error-code: INSUFFICIENT_FUNDS
+          x-ax-error-suggestion: Verify account balance before retrying
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      operationId: listPayments
+      summary: List all payments
+      description: Returns a paginated list of payments
+      x-ax-capabilities:
+        - list_payments
+        - search_payments
+      x-ax-retryable: true
+      x-ax-sandboxable: true
+      x-ax-category: payments
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+            example: 20
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+            example: 0
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - pending
+              - completed
+              - failed
+              - refunded
+            example: completed
+      responses:
+        '200':
+          description: List of payments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentList'
+
+  /payments/{id}:
+    get:
+      operationId: getPayment
+      summary: Get payment by ID
+      description: Retrieves details of a specific payment
+      x-ax-capabilities:
+        - get_payment
+        - view_payment_details
+      x-ax-retryable: true
+      x-ax-sandboxable: true
+      x-ax-category: payments
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "550e8400-e29b-41d4-a716-446655440000"
+      responses:
+        '200':
+          description: Payment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+        '404':
+          description: Payment not found
+          x-ax-error-code: PAYMENT_NOT_FOUND
+          x-ax-error-suggestion: Verify the payment ID exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /payments/{id}/refund:
+    post:
+      operationId: refundPayment
+      summary: Refund a payment
+      description: Initiates a refund for a completed payment
+      x-ax-required-fields:
+        - reason
+      x-ax-capabilities:
+        - refund_payment
+        - reverse_transaction
+      x-ax-retryable: false
+      x-ax-idempotent: true
+      x-ax-sandboxable: true
+      x-ax-category: payments
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            example: "550e8400-e29b-41d4-a716-446655440000"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefundRequest'
+      responses:
+        '200':
+          description: Refund processed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+        '400':
+          description: Invalid refund request
+          x-ax-error-code: INVALID_REFUND_REQUEST
+          x-ax-error-suggestion: Payment must be in completed status to refund
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Refund already processed
+          x-ax-error-code: REFUND_ALREADY_EXISTS
+          x-ax-error-suggestion: Check existing refunds for this payment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    CreatePaymentRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - amount
+        - currency
+        - recipient_id
+      properties:
+        amount:
+          type: integer
+          description: Amount in smallest currency unit (e.g., cents)
+          minimum: 1
+          example: 1000
+        currency:
+          type: string
+          description: ISO 4217 currency code
+          enum:
+            - USD
+            - EUR
+            - GBP
+            - JPY
+          example: USD
+        recipient_id:
+          type: string
+          format: uuid
+          description: ID of the payment recipient
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        description:
+          type: string
+          description: Optional payment description
+          maxLength: 255
+          example: "Invoice payment #12345"
+        metadata:
+          type: object
+          description: Custom key-value metadata
+          additionalProperties:
+            type: string
+          example:
+            invoice_id: "INV-12345"
+
+    Payment:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        amount:
+          type: integer
+          example: 1000
+        currency:
+          type: string
+          example: USD
+        status:
+          type: string
+          enum:
+            - pending
+            - completed
+            - failed
+            - refunded
+          example: completed
+        recipient_id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        created_at:
+          type: string
+          format: date-time
+          example: "2026-03-30T10:30:00Z"
+
+    PaymentList:
+      type: object
+      additionalProperties: false
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+        pagination:
+          type: object
+          additionalProperties: false
+          properties:
+            total:
+              type: integer
+              example: 150
+            limit:
+              type: integer
+              example: 20
+            offset:
+              type: integer
+              example: 0
+            has_more:
+              type: boolean
+              example: true
+
+    RefundRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - reason
+      properties:
+        reason:
+          type: string
+          description: Reason for the refund
+          enum:
+            - duplicate
+            - fraudulent
+            - requested_by_customer
+            - other
+          example: requested_by_customer
+        amount:
+          type: integer
+          description: Partial refund amount (omit for full refund)
+          minimum: 1
+          example: 500
+
+    Refund:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "660e8400-e29b-41d4-a716-446655440001"
+        payment_id:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        amount:
+          type: integer
+          example: 1000
+        status:
+          type: string
+          enum:
+            - pending
+            - completed
+            - failed
+          example: completed
+        reason:
+          type: string
+          example: requested_by_customer
+        created_at:
+          type: string
+          format: date-time
+          example: "2026-03-30T11:00:00Z"
+
+    Error:
+      type: object
+      additionalProperties: false
+      required:
+        - error_code
+        - message
+      properties:
+        error_code:
+          type: string
+          description: Machine-readable error code
+          example: INVALID_PAYMENT_REQUEST
+        message:
+          type: string
+          description: Human-readable error message
+          example: "Amount must be a positive integer"
+        retryable:
+          type: boolean
+          description: Whether the request can be retried
+          example: false
+        suggestion:
+          type: string
+          description: Actionable fix suggestion
+          example: "Ensure amount is greater than 0"
+        details:
+          type: array
+          description: Field-level validation errors
+          items:
+            type: object
+            additionalProperties: false
+            properties:
+              field:
+                type: string
+                example: amount
+              code:
+                type: string
+                example: INVALID_VALUE
+              message:
+                type: string
+                example: "must be greater than 0"
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT or API token for agent authentication
+
+security:
+  - bearerAuth: []

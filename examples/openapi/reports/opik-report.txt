@@ -1,0 +1,38 @@
+ using ruleset '/Users/johnwang/go/src/github.com/grokify/ax-spec/rules/ax-openapi.json' (containing 87 rules)
+ vacuuming file '/Users/johnwang/go/src/github.com/plexusone/opik-go/openapi/openapi.yaml' against 87 rules: https://quobix.com/vacuum/rulesets/recommended
+
+ category              ✗ errors      ▲ warnings    ● info                                                  
+ ────────────────────  ────────────  ────────────  ────────────────────────────────────────────────────────
+ Operations            0             26            0                                                       
+ Tags                  0             2             0                                                       
+ Schemas               38            860           53                                                      
+ Validation            47            400           2,178                                                   
+ Descriptions          0             770           501                                                     
+ Examples              0             676           0                                                       
+ ────────────────────  ────────────  ────────────  ────────────────────────────────────────────────────────
+ total                 85            2,734         2,732                                                   
+
+ rule                                      violations    quality impact                                    
+ ────────────────────────────────────────  ────────────  ──────────────────────────────────────────────────
+ ax-testable-example-values                1,744         ██████████████████████████████████████████████████
+ camel-case-properties                     799           ██████████████████████                            
+ oas3-missing-example                      676           ███████████████████                               
+ description-duplication                   501           ██████████████                                    
+ component-description                     379           ██████████                                        
+ oas3-parameter-description                272           ███████                                           
+ ax-explicit-parameter-required            167           ████                                              
+ operation-description                     119           ███                                               
+ ax-introspectable-capabilities-post       81            ██                                                
+ ax-recoverable-retryable-post             81            ██                                                
+ ────────────────────────────────────────  ────────────  ──────────────────────────────────────────────────
+ total                                     5,551       
+ ... and 25 more rules
+
+ --> use the <dashboard> command to be able to navigate results interactively <--
+
+ | Quality Score: 10/100 [🥵]
+
+ | ✗ Failed with 85 errors, 2,734 warnings and 2,732 informs.
+
+ use --debug if you want to enable developer logging
+
