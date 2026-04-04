@@ -1,0 +1,72 @@
+site_name: AX Spec
+site_description: Agent Experience (AX) specification and tools for building agent-friendly APIs
+site_url: https://plexusone.github.io/ax-spec
+repo_url: https://github.com/plexusone/ax-spec
+repo_name: plexusone/ax-spec
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Quick Start: getting-started/quick-start.md
+      - Compliance Levels: getting-started/compliance-levels.md
+      - CLI Reference: getting-started/cli.md
+  - Extensions:
+      - Overview: extensions/index.md
+      - x-ax-required-fields: extensions/required-fields.md
+      - x-ax-capabilities: extensions/capabilities.md
+      - x-ax-error-code: extensions/error-code.md
+      - x-ax-retryable: extensions/retryable.md
+  - Rules Reference:
+      - Overview: rules/index.md
+      - Deterministic: rules/deterministic.md
+      - Introspectable: rules/introspectable.md
+      - Recoverable: rules/recoverable.md
+      - Explicit: rules/explicit.md
+      - Consistent: rules/consistent.md
+      - Testable: rules/testable.md
+  - Case Studies:
+      - Overview: case-studies/index.md
+      - ElevenLabs Go SDK: case-studies/elevenlabs-go/index.md
+      - Opik Go SDK: case-studies/opik-go/index.md
+      - Template: case-studies/_template/index.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/plexusone/ax-spec
