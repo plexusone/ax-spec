@@ -23,12 +23,12 @@ type Options struct {
 
 // Report contains statistics from the enrichment process.
 type Report struct {
-	OperationsProcessed  int
-	CapabilitiesAdded    int
-	RequiredFieldsAdded  int
-	RetryableFlagsAdded  int
+	OperationsProcessed   int
+	CapabilitiesAdded     int
+	RequiredFieldsAdded   int
+	RetryableFlagsAdded   int
 	SandboxableFlagsAdded int
-	ErrorCodesDiscovered int
+	ErrorCodesDiscovered  int
 }
 
 // Enricher adds x-ax-* extensions to OpenAPI specs.
