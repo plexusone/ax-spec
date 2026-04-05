@@ -80,7 +80,7 @@ func (d *Discoverer) DiscoverErrors(spec *Spec) ([]DiscoveryResult, error) {
 }
 
 // probeEndpoint makes a request to discover error response format.
-func (d *Discoverer) probeEndpoint(method, path string, operation map[string]any) *DiscoveryResult {
+func (d *Discoverer) probeEndpoint(method, path string, _ map[string]any) *DiscoveryResult {
 	// Build URL - replace path parameters with invalid values
 	url := d.baseURL + replacePlaceholders(path, "invalid-id-12345")
 

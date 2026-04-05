@@ -160,7 +160,7 @@ func isHTTPMethod(method string) bool {
 
 // inferCapabilities derives x-ax-capabilities from operationId.
 // Example: "createTrace" -> ["create_trace"]
-func inferCapabilities(operationID, method, path string) []string {
+func inferCapabilities(operationID, _, _ string) []string {
 	// Convert camelCase to snake_case
 	cap := camelToSnake(operationID)
 
