@@ -1,0 +1,41 @@
+{
+  "irVersion": "1.0",
+  "project": "ax-spec",
+  "repository": "https://github.com/plexusone/ax-spec",
+  "versioning": "semver",
+  "commitConvention": "conventional",
+  "maintainers": ["plexusone", "grokify"],
+  "releases": [
+    {
+      "version": "v0.1.0",
+      "date": "2026-04-20",
+      "highlights": [
+        { "description": "Initial release of AX Spec - Agent Experience specification and CLI tools for building agent-friendly APIs" },
+        { "description": "Spectral-compatible linting rules enforcing DIRECT principles across three compliance levels" },
+        { "description": "CLI with lint, enrich, and gen commands for the complete AX workflow" }
+      ],
+      "added": [
+        { "description": "`ax-spec lint` command wrapping vacuum for OpenAPI validation against AX rules", "commit": "29a0e49" },
+        { "description": "`ax-spec enrich` command for adding `x-ax-*` extensions via inference and API discovery", "commit": "29a0e49" },
+        { "description": "`ax-spec gen` command for generating Go code (errors, retry, capabilities, validation) from enriched specs", "commit": "29a0e49" },
+        { "description": "Spectral ruleset (`ax-openapi.json`) with rules for all DIRECT principles", "commit": "32a6879" },
+        { "description": "Three compliance level profiles: L1 Structured, L2 Deterministic, L3 Agent-Ready", "commit": "32a6879" },
+        { "description": "JSON Schema for `x-ax-*` OpenAPI extensions", "commit": "5d48e8d" },
+        { "description": "`pkg/gen` package for extracting AX metadata and generating typed Go code", "commit": "b2795db" },
+        { "description": "`pkg/enrich` package for inferring `x-ax-*` extensions from OpenAPI structure", "commit": "b2795db" },
+        { "description": "API discovery feature to probe live APIs for undocumented error codes", "commit": "b2795db" },
+        { "description": "Real-world OpenAPI examples: Opik (201 endpoints), ElevenLabs (204 endpoints)", "commit": "2172726" },
+        { "description": "Generated Go code samples for Opik and ElevenLabs SDKs", "commit": "94f0541" }
+      ],
+      "documentation": [
+        { "description": "MkDocs site with getting started guides, extension reference, and rules documentation", "commit": "65514b8" },
+        { "description": "Case studies documenting AX integration in elevenlabs-go and opik-go SDKs", "commit": "65514b8" },
+        { "description": "Case study template for documenting new integrations", "commit": "65514b8" },
+        { "description": "TASKS.md with experiment plan for measuring AX benefits quantitatively", "commit": "7908aac" }
+      ],
+      "infrastructure": [
+        { "description": "GitHub Actions CI workflows for build, lint, and test", "commit": "4258f03" }
+      ]
+    }
+  ]
+}

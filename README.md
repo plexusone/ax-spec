@@ -65,6 +65,22 @@ npm install -g @stoplight/spectral-cli
 spectral lint your-api.yaml --ruleset https://raw.githubusercontent.com/plexusone/ax-spec/main/rules/ax-openapi.json
 ```
 
+### Using the ax-spec CLI
+
+```bash
+# Install ax-spec
+go install github.com/plexusone/ax-spec/cmd/ax-spec@latest
+
+# Lint OpenAPI spec
+ax-spec lint openapi.yaml --level l2
+
+# Enrich spec with x-ax-* extensions
+ax-spec enrich openapi.yaml -o openapi-ax.yaml
+
+# Generate Go code from enriched spec
+ax-spec gen openapi-ax.yaml -o pkg/ax --package ax
+```
+
 ## Compliance Levels
 
 AX Spec defines progressive compliance levels for incremental adoption:
@@ -205,6 +221,17 @@ AX Spec includes analysis of production OpenAPI specifications:
 
 See [examples/openapi/ANALYSIS.md](examples/openapi/ANALYSIS.md) for detailed breakdown.
 
+## Case Studies
+
+Production SDKs with AX integration:
+
+| SDK | Domain | Endpoints | Error Codes | Retry Policies |
+|-----|--------|-----------|-------------|----------------|
+| [elevenlabs-go](https://github.com/plexusone/elevenlabs-go) | Voice generation | 204 | 9 | 236 |
+| [opik-go](https://github.com/plexusone/opik-go) | LLM observability | 201 | 19 | 201 |
+
+See the [case studies documentation](docs/case-studies/) for detailed implementation guides.
+
 ## Project Structure
 
 ```
@@ -256,6 +283,10 @@ AX Spec emerged from practical experience building SDKs for dozens of APIs at [P
 - Inconsistent patterns requiring per-API workarounds
 
 See the [Agent Experience article](https://github.com/grokify/grokify-articles/tree/master/agent-experience-ax) for the full context.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for release history.
 
 ## License
 

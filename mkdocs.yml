@@ -69,6 +69,8 @@ nav:
       - ElevenLabs Go SDK: case-studies/elevenlabs-go/index.md
       - Opik Go SDK: case-studies/opik-go/index.md
       - Template: case-studies/_template/index.md
+  - Releases:
+      - v0.1.0: releases/v0.1.0.md
 
 extra:
   social:

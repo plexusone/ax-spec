@@ -67,6 +67,10 @@ See real-world implementations of AX principles:
 | [elevenlabs-go](case-studies/elevenlabs-go/index.md) | Voice generation | 204 | 9 | 236 |
 | [opik-go](case-studies/opik-go/index.md) | LLM observability | 201 | 19 | 201 |
 
+## Releases
+
+- [v0.1.0](releases/v0.1.0.md) — Initial release with CLI, Spectral rules, and code generation
+
 ## Resources
 
 - [DIRECT Principles](https://github.com/grokify/direct-principles) — The conceptual foundation for AX
